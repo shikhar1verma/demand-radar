@@ -1,0 +1,29 @@
+subreddit,category,audience,notes
+SaaS,founder,SaaS founders,Noisy but useful for builder trends
+B2BSaaS,founder,B2B SaaS founders,Good for pricing churn growth discussions
+micro_saas,founder,Indie SaaS builders,Good for small product ideas
+smallbusiness,buyer,Small business owners,Strong operational pain
+agency,buyer,Agency owners,Good for client reporting and ops pain
+consulting,buyer,Consultants,Good for client workflow pain
+sales,buyer,Sales reps and managers,Good for CRM and follow-up pain
+marketing,buyer,Marketers,Good for campaign and reporting pain
+shopify,buyer,Ecommerce operators,Good app ecosystem and paid tool demand
+recruiting,buyer,Recruiters,Good ATS and follow-up pain
+humanresources,buyer,HR teams,Good onboarding and people ops pain
+productmanagement,role,Product managers,Good workflow and feedback pain
+sysadmin,role,IT/sysadmin,Strong tool complaints and budget clues
+devops,role,DevOps engineers,Strong operational pain
+webdev,role,Web developers,Tooling and client workflow pain
+nocode,workflow,No-code builders,Good workaround and automation signal
+automation,workflow,Automation builders,Strong workflow replacement signal
+excel,workflow,Spreadsheet users,Manual workflow signals
+googlesheets,workflow,Spreadsheet users,Manual workflow signals
+Notion,tool,Notion users,Alternative and workflow pain
+Airtable,tool,Airtable users,Workflow and pricing pain
+HubSpot,tool,CRM users,Competitor dissatisfaction
+salesforce,tool,CRM users,Enterprise pain but noisier
+zapier,tool,Automation users,Pricing and workflow gaps
+ClickUp,tool,PM users,Project management complaints
+Asana,tool,PM users,Project management complaints
+Webflow,tool,Webflow users,Agency and build workflow pain
+Wordpress,tool,Website builders,Plugin and client pain

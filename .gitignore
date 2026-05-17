@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Env and local data
+.env
+*.sqlite
+*.sqlite3
+*.db
+
+# Generated reports
+reports/*.md
+reports/*.csv
+!reports/.gitkeep
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
