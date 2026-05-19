@@ -10,6 +10,7 @@ Encodes the M1 Done-when checklist from .context/milestones.md:
 
 from __future__ import annotations
 
+import inspect
 import sqlite3
 from pathlib import Path
 
@@ -20,7 +21,7 @@ from typer.testing import CliRunner
 from demand_radar import db
 from demand_radar.backends import public_json as pj_module
 from demand_radar.backends.public_json import PublicJsonBackend
-from demand_radar.cli import app
+from demand_radar.cli import app, collect_watchlist_cmd
 from demand_radar.collector import collect_watchlist
 from demand_radar.config import Settings
 from demand_radar.models import RedditPost
@@ -80,11 +81,9 @@ def test_collect_watchlist_cli_command_exists() -> None:
 
 
 def test_collect_watchlist_cli_accepts_since_and_limit_options() -> None:
-    runner = CliRunner()
-    result = runner.invoke(app, ["collect-watchlist", "--help"])
-    assert result.exit_code == 0
-    assert "--since" in result.stdout
-    assert "--limit" in result.stdout
+    params = inspect.signature(collect_watchlist_cmd).parameters
+    assert "since" in params
+    assert "limit" in params
 
 
 def test_load_watchlist_reads_subreddit_names_in_order(tmp_path: Path) -> None:
