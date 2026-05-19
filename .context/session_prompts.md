@@ -1,72 +1,126 @@
 # Session Prompts
 
-Paste these into a new Claude Code session opened **inside the `demand_radar/` folder** (so `.context/` resolves relative).
-
----
-
-## 1. Session-start prompt (load the goal)
-
-Run this as the **first message** of any new session working on demand_radar:
+Three prompts. Paste them into Claude Code sessions opened **inside the `demand_radar/` folder** (so `.context/` resolves relative).
 
 ```
-Read .context/goal.md, .context/milestones.md, and .context/workflow.md.
-Also read CLAUDE.md and docs/ARCHITECTURE.md.
-
-Then in under 150 words tell me:
-1. Which milestone (M1–M5) is the current focus, and why.
-2. The single next concrete step toward it — which must be either
-   (a) writing the next failing test, or (b) implementing the smallest
-   thing that turns one current failing test green. Per .context/workflow.md.
-3. Any anti-goal drift you see in the current codebase or in my recent
-   messages (compare against the anti-goals list in .context/goal.md).
-
-Confirm CI is green by checking `gh run list --limit 1` before suggesting
-any new work.
-
-Do not write any code yet. Wait for me to pick the step.
+1. Worker     — one session, autonomous, drives milestones to completion
+2. Watchdog   — separate session running /loop, sanity-checks drift
+3. Verifier   — one-shot manual audit, optional
 ```
 
 ---
 
-## 2. Loop check-in prompt (use with `/loop`)
+## 1. Worker session — autonomous milestone executor
 
-This is the **periodic sanity check**. Wire it via the `/loop` skill so it runs every 20 minutes (or whatever cadence feels right):
-
-```
-/loop 20m Read .context/goal.md, .context/milestones.md, and .context/workflow.md. Then read the recent conversation and any git diff since the last check. In under 140 words tell me: (1) which milestone we are currently on, (2) is the work in the last interval aligned with that milestone — yes / no / drifting, (3) any anti-goal violations (dashboard talk, premature second source, embedding clustering, keyword-filter tuning, AND for M3: any Agent subagent call without explicit model="sonnet"), (4) any TDD violations per .context/workflow.md — production code added without a preceding failing test, skipped tests with no removal date, OR red CI on main, (5) the single next concrete step. Reporting only — do not modify files.
-```
-
-If you prefer self-paced (model decides when to check in):
+Paste this as the **first and only kickoff message** of a fresh session. The session will pick up the next undone milestone and execute it via TDD without waiting for you to micromanage steps.
 
 ```
-/loop Read .context/goal.md and .context/milestones.md. Periodically check whether the conversation is aligned with the current milestone and the anti-goals. Surface any drift in <120 words. Reporting only.
+You are the demand_radar worker session.
+
+Boot sequence:
+
+1. Read CLAUDE.md, .context/goal.md, .context/milestones.md,
+   .context/workflow.md, and docs/ARCHITECTURE.md.
+2. Run `gh run list --limit 1 --json status,conclusion,headSha` to confirm
+   CI is green on the latest commit on main. If red, your only job is to
+   make it green before doing anything else.
+3. Find the FIRST milestone in .context/milestones.md whose Status line
+   is not "✓ Done". This is the current milestone.
+4. If its Status is "Not started", update it to "In progress" in your
+   first commit of the milestone.
+5. State in two sentences: which milestone you picked and your first
+   concrete action.
+
+Then execute autonomously, looping:
+
+- If no failing tests exist for the current milestone yet, your first
+  action is to write a failing test file in tests/ that encodes the
+  "Done when" checklist of the current milestone. Commit with message
+  "Add failing tests for M<N> — <one line>". Push.
+- Otherwise, implement the smallest thing that turns one currently
+  failing test green. Commit. Push.
+- After every push, run `gh run watch --exit-status` on the new run.
+  Require green CI before proceeding to the next test.
+- When every "Done when" bullet of the current milestone has a passing
+  test (verify by running pytest and re-reading the milestone), update
+  the milestone's Status line to "✓ Done (<today's date in YYYY-MM-DD>)"
+  and commit with message "Mark M<N> done". Push and confirm CI green.
+- Move to the next milestone. Repeat from step 4.
+
+Rules:
+
+- Use TDD per .context/workflow.md. Production code added without a
+  preceding failing test is a violation — do not do it.
+- For any Agent subagent doing classification (M3): always pass
+  model="sonnet" explicitly. Never inherit the parent's model.
+- Author commits with the local git identity. Do NOT add Co-Authored-By
+  trailers or any Claude/AI attribution.
+- Never use --no-verify, --no-gpg-sign, or any flag that bypasses hooks.
+- Never push with red CI on main. If a push goes red, the next commit
+  must be the fix.
+
+Stop and ask the user only when:
+
+- Reddit/API credentials are needed and the relevant env var is empty
+  in .env.
+- A "Done when" criterion is genuinely ambiguous and you cannot resolve
+  it from goal.md, milestones.md, workflow.md, or the existing code.
+- Proceeding would require violating an anti-goal listed in
+  .context/goal.md.
+- A milestone's scope needs renegotiation (e.g. blocked by an external
+  dependency outside the project).
+
+Do not stop for cosmetic choices, naming bikeshedding, or "want me to
+do X?" — just do the thing. Be concise in chat updates: one or two
+sentences per action.
+
+V1 is complete when M5's Status is "✓ Done". At that point, summarise
+in <200 words what was built and the resulting brief, then stop.
+
+Start now.
 ```
 
 ---
 
-## 3. Manual sanity-check prompt (no /loop, paste when you want it)
+## 2. Watchdog — `/loop` sanity check (separate session, reporting only)
 
-When you want a one-shot check without a scheduled loop:
-
-```
-Sanity check. Read .context/goal.md and .context/milestones.md. Tell me in under 100 words: which milestone am I on, am I drifting, what is the very next concrete step.
-```
-
----
-
-## 4. Milestone-completion prompt
-
-When you think a milestone is done — use this to validate before crossing it off:
+Run this in a **different** Claude Code session (also inside `demand_radar/`) while the worker session is doing its thing. It checks for drift every 20 minutes and never modifies files.
 
 ```
-I think M<N> is done. Read .context/milestones.md and .context/workflow.md. Verify against the "Done when" checklist. For each criterion, cite the file/line that proves it AND the test that enforces it (or say "not yet" and what's missing). Also confirm: pytest is green locally, ruff check is clean, latest CI run on main is green. Do not mark anything done unless every criterion is satisfied AND there is a test enforcing each one.
+/loop 20m Read .context/goal.md, .context/milestones.md, and .context/workflow.md. Run `gh run list --limit 3 --json status,conclusion,headSha` and `git log -5 --oneline main`. In under 140 words tell me: (1) which milestone is "In progress" right now per its Status line in milestones.md, (2) is the work in the last 20 minutes aligned with that milestone — yes / no / drift, (3) any anti-goal violations (dashboard talk, premature second source, embedding clustering, keyword-filter tuning) OR for M3 any Agent subagent call without explicit model="sonnet", (4) any TDD violations — production code added without a preceding failing test, skipped tests with no removal date, OR red CI on main, (5) any commits whose scope looks out of bounds. Reporting only — do not modify files, do not run pytest, just observation.
+```
+
+If you prefer self-paced cadence instead of a fixed 20-min interval:
+
+```
+/loop Read .context/goal.md, .context/milestones.md, and .context/workflow.md. Periodically (when you judge useful) check whether the worker session's recent work aligns with the current "In progress" milestone and surfaces any drift or anti-goal violations in <140 words. Reporting only — never modify files.
 ```
 
 ---
 
-## Tips
+## 3. Verifier — manual milestone audit (one-shot, optional)
 
-- Always start a session with prompt **#1** before doing any work.
-- Run prompt **#2** in the background of long sessions so drift gets caught early.
-- Use prompt **#4** before pushing a milestone-closing commit — better to find a gap before commit than after.
-- If a sanity check says "drifting" twice in a row, **stop coding** and re-read [.context/goal.md](goal.md).
+Use this when you want to independently audit a milestone before trusting it as done. The worker session self-verifies before marking, so this is a belt-and-suspenders check, not a regular step.
+
+```
+Audit M<N>. Read .context/milestones.md and .context/workflow.md. For each "Done when" bullet of M<N>, cite (a) the file/line that proves the criterion is satisfied AND (b) the specific test that enforces it. Confirm: pytest is green locally, ruff check . is clean, and the latest CI run on main is green. If every criterion has both a proof location and an enforcing test, and the three green checks hold, then update the milestone's Status line to "✓ Done (YYYY-MM-DD)" and commit with message "Mark M<N> done — verified". If any check fails, do NOT modify the Status line — instead, report exactly what is missing.
+```
+
+---
+
+## How these fit together
+
+```
+   Worker session (prompt #1)            Watchdog session (prompt #2)
+   ─────────────────────────             ──────────────────────────
+   Picks current milestone               Reads milestones.md every 20m
+   Writes failing tests                  Compares last 20m of work
+   Implements until green                Reports drift / violations
+   Updates Status: ✓ Done                Never modifies files
+   Repeats M1 → M5
+            │
+            └────── if blocked or scope ambiguous → ask user
+
+   Verifier prompt (#3) — invoked by user any time to independently audit
+   a milestone before trusting the worker's "✓ Done" mark.
+```

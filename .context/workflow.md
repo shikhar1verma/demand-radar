@@ -46,18 +46,22 @@ Every test we write is one Done-when criterion that's now mechanically enforced.
 
 If a brief comes back wrong because the classifier mislabelled a signal, we need to be able to trust that the rest of the pipeline didn't ALSO drift. TDD plus CI gives us that floor.
 
-## Daily rhythm
+## Execution model
 
-Before any work session:
+A worker session (prompt #1 in [session_prompts.md](session_prompts.md)) drives milestones autonomously. The user runs a watchdog session (prompt #2) in parallel to catch drift. The worker's loop, per milestone:
 
 1. `git pull` (if multi-machine).
-2. `uv run pytest && uv run ruff check .` — both must be green locally before you start.
-3. Read [goal.md](goal.md) and [milestones.md](milestones.md), or run prompt #1 from [session_prompts.md](session_prompts.md).
-4. Pick exactly one test to make pass.
-5. Make it pass. Commit. Push. Watch CI go green.
-6. Repeat.
+2. `uv run pytest && uv run ruff check .` — both must be green locally before starting a new test.
+3. Read the current milestone in [milestones.md](milestones.md) (first one with `Status:` not `✓ Done`).
+4. If no failing tests exist for it yet, write the failing test file that encodes its Done-when checklist. Commit. Push.
+5. Implement the smallest thing that turns one currently-failing test green. Commit. Push.
+6. `gh run watch` — require CI green before the next test.
+7. When every Done-when bullet has a passing test, update the milestone's `Status:` line to `✓ Done (YYYY-MM-DD)`. Commit. Push.
+8. Move to the next milestone. Repeat from step 3.
 
 If CI ever goes red, the next commit must be the fix. No new features on top of red CI.
+
+The worker stops only when (a) M5 is `✓ Done` (V1 complete), or (b) it hits one of the explicit stop conditions in prompt #1 (missing credentials, ambiguous criteria, anti-goal collision, scope renegotiation).
 
 ## See also
 

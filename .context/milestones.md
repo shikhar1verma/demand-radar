@@ -4,9 +4,23 @@ Broader chunks of work that, together, get us to the goal in [goal.md](goal.md).
 
 **Ordered. Do not skip ahead.** Each milestone multiplies the value of the next. Skipping = wasted work.
 
+## Status conventions
+
+Each milestone has a `Status:` line that is the **single source of truth for progress**. The worker session (prompt #1 in [session_prompts.md](session_prompts.md)) updates it as criteria are satisfied. The `/loop` watchdog (prompt #2) reads these to determine current focus.
+
+Possible values:
+
+- `Not started`
+- `In progress`
+- `✓ Done (YYYY-MM-DD)`
+
+The worker session always works on the **first milestone whose Status is not `✓ Done`**.
+
 ---
 
 ## M1 — `collect-watchlist` CLI
+
+**Status:** Not started
 
 **Output:** one command that politely loops the 48-row watchlist via the `public_json` backend, dedupes by Reddit id, and writes signals.
 
@@ -23,6 +37,8 @@ Broader chunks of work that, together, get us to the goal in [goal.md](goal.md).
 
 ## M2 — Opportunity persistence + validation_status
 
+**Status:** Not started
+
 **Output:** the `opportunities` table is actually populated (currently dead schema), with stable hash keys and a `validation_status` column the user can update via CLI.
 
 **Done when:**
@@ -36,7 +52,9 @@ Broader chunks of work that, together, get us to the goal in [goal.md](goal.md).
 
 ---
 
-## M3 — LLM classification via Claude Code subagents (Haiku / Sonnet)
+## M3 — LLM classification via Claude Code subagents (Sonnet)
+
+**Status:** Not started
 
 **Output:** a parallel subagent fan-out classifies batches of posts/comments. Each subagent returns Pydantic-validated `Signal` rows with verbatim buyer quotes, named tools, and 1–5 scores.
 
@@ -68,6 +86,8 @@ Broader chunks of work that, together, get us to the goal in [goal.md](goal.md).
 
 ## M4 — `brief` bridge command (demand_radar → productionize_engine)
 
+**Status:** Not started
+
 **Output:** `demand-radar brief --theme "<name>"` reads the top opportunity row + its supporting posts/comments and renders the [productionize_engine/templates/opportunity_brief.md](../../productionize_engine/templates/opportunity_brief.md) template with real evidence URLs, verbatim buyer quotes, and a pre-filled scorecard.
 
 **Done when:**
@@ -81,6 +101,8 @@ Broader chunks of work that, together, get us to the goal in [goal.md](goal.md).
 ---
 
 ## M5 — First real brief, hand-reviewed (= V1 goal met)
+
+**Status:** Not started
 
 **Output:** a single brief in `productionize_engine/briefs/` that scores ≥ 35 / 45 and I would actually send outreach against.
 
