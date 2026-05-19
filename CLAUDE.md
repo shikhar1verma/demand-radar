@@ -42,6 +42,22 @@ Out of scope for V1:
 - Automated Reddit DMs.
 - Large-scale scraping.
 
+## Working method — test-driven development
+
+Every milestone in `.context/milestones.md` is shipped via TDD with CI as
+the gate. Short version:
+
+1. Read the milestone's "Done when" checklist.
+2. Write failing tests that encode those criteria. Commit them.
+3. Implement the smallest thing that makes one test pass. Commit. Push.
+4. Repeat until all Done-when bullets have passing tests.
+5. CI must stay green. Red CI = stop everything and fix it first.
+
+Exceptions (no test-first required): doc-only commits, lint/style/typing
+fixes with no behaviour change, throwaway research spikes.
+
+See `.context/workflow.md` for full rationale and anti-patterns.
+
 ## Code standards
 
 - Python 3.11+.
@@ -52,6 +68,7 @@ Out of scope for V1:
 - Avoid global mutable state.
 - Make network calls replaceable/mocked.
 - Tests must not require live Reddit credentials.
+- No live LLM calls in tests — use recorded subagent responses as fixtures.
 
 ## Sub-agent rules (Claude Code Agent tool)
 
