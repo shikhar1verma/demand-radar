@@ -15,7 +15,6 @@ from pathlib import Path
 
 import httpx
 import pytest
-from demand_radar.watchlist import load_watchlist
 from typer.testing import CliRunner
 
 from demand_radar import db
@@ -25,6 +24,7 @@ from demand_radar.cli import app
 from demand_radar.collector import collect_watchlist
 from demand_radar.config import Settings
 from demand_radar.models import RedditPost
+from demand_radar.watchlist import load_watchlist
 
 
 def _settings(tmp_path: Path) -> Settings:
