@@ -4,12 +4,24 @@ import typer
 from rich.console import Console
 
 from demand_radar import db
-from demand_radar.collector import collect_subreddit
+from demand_radar.collector import collect_subreddit, collect_watchlist
 from demand_radar.config import get_settings
 from demand_radar.reports import generate_report
 
 app = typer.Typer(help="Demand Radar local Reddit ETL")
 console = Console()
+
+
+def _parse_since_days(value: str | None) -> int | None:
+    """Accept '7d', '14d', or a bare integer-day count. None disables the filter."""
+    if value is None:
+        return None
+    stripped = value.strip().lower()
+    if not stripped:
+        return None
+    if stripped.endswith("d"):
+        stripped = stripped[:-1]
+    return int(stripped)
 
 
 @app.command("init-db")
@@ -36,6 +48,33 @@ def collect(
         limit=limit,
         comment_limit=comment_limit,
         sleep_seconds=sleep_seconds,
+    )
+    console.print(result)
+
+
+@app.command("collect-watchlist")
+def collect_watchlist_cmd(
+    since: str = typer.Option(
+        "7d", "--since", help="Only keep posts newer than this window (e.g. '7d')."
+    ),
+    limit: int = typer.Option(50, "--limit", help="Max posts per subreddit."),
+    watchlist: str = typer.Option(
+        "data/watchlist.csv",
+        "--watchlist",
+        help="Path to watchlist CSV (subreddit column required).",
+    ),
+    sleep_seconds: float = typer.Option(
+        2.0, "--sleep-seconds", help="Polite sleep between subreddits (>= 2.0)."
+    ),
+) -> None:
+    """Loop the watchlist, politely fetch new posts per subreddit, dedupe, extract signals."""
+    settings = get_settings()
+    result = collect_watchlist(
+        settings=settings,
+        watchlist_path=Path(watchlist),
+        per_sub_limit=limit,
+        since_days=_parse_since_days(since),
+        sleep_between_subs=sleep_seconds,
     )
     console.print(result)
 

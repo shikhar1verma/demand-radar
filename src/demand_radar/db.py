@@ -82,6 +82,8 @@ CREATE TABLE IF NOT EXISTS opportunities (
 CREATE INDEX IF NOT EXISTS idx_posts_subreddit_created ON reddit_posts(subreddit, created_utc);
 CREATE INDEX IF NOT EXISTS idx_comments_post ON reddit_comments(post_id);
 CREATE INDEX IF NOT EXISTS idx_signals_type ON signals(signal_type);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_signals_source_unique
+    ON signals(source_type, source_id, signal_type);
 """
 
 
@@ -161,7 +163,7 @@ def save_signals(conn: sqlite3.Connection, signals: Iterable[Signal]) -> int:
     for signal in signals:
         cur = conn.execute(
             """
-            INSERT INTO signals
+            INSERT OR IGNORE INTO signals
             (source_type, source_id, subreddit, signal_type, pain_theme, buyer_role, industry,
              tools_mentioned, buying_intent_score, urgency_score, competitor_complaint_score,
              manual_workaround_score, summary, evidence_url, created_at)
