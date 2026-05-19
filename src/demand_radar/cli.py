@@ -93,3 +93,45 @@ def where() -> None:
     settings = get_settings()
     console.print(f"Database: {Path(settings.database_path).resolve()}")
     console.print(f"Reports: {Path(settings.reports_dir).resolve()}")
+
+
+_VALID_STATUSES = {"pursuing", "parked", "rejected", "unvalidated"}
+
+
+@app.command("status")
+def status_cmd(
+    opportunity: str = typer.Option(
+        ..., "--opportunity", help="Opportunity key (hash) or numeric id."
+    ),
+    set_to: str = typer.Option(
+        ..., "--set", help=f"New validation_status; one of {sorted(_VALID_STATUSES)}."
+    ),
+) -> None:
+    """Set the validation_status of an opportunity by key or numeric id."""
+    if set_to not in _VALID_STATUSES:
+        raise typer.BadParameter(
+            f"--set must be one of {sorted(_VALID_STATUSES)}, got {set_to!r}"
+        )
+    settings = get_settings()
+    db.init_db(settings.database_path)
+    conn = db.connect(settings.database_path)
+    try:
+        opp_id: int | None = int(opportunity)
+    except ValueError:
+        opp_id = None
+    if opp_id is not None:
+        cur = conn.execute(
+            "UPDATE opportunities SET validation_status = ? WHERE id = ?",
+            (set_to, opp_id),
+        )
+    else:
+        cur = conn.execute(
+            "UPDATE opportunities SET validation_status = ? WHERE key = ?",
+            (set_to, opportunity),
+        )
+    conn.commit()
+    rows = cur.rowcount
+    conn.close()
+    if rows == 0:
+        raise typer.BadParameter(f"opportunity not found: {opportunity}")
+    console.print(f"Set {opportunity} -> {set_to} ({rows} row updated)")
