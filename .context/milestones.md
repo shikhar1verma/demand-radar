@@ -86,7 +86,7 @@ The worker session always works on the **first milestone whose Status is not `�
 
 ## M4 — `brief` bridge command (demand_radar → productionize_engine)
 
-**Status:** Not started
+**Status:** ✓ Done (2026-05-19)
 
 **Output:** `demand-radar brief --theme "<name>"` reads the top opportunity row + its supporting posts/comments and renders the [productionize_engine/templates/opportunity_brief.md](../../productionize_engine/templates/opportunity_brief.md) template with real evidence URLs, verbatim buyer quotes, and a pre-filled scorecard.
 

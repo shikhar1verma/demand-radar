@@ -4,6 +4,7 @@ import typer
 from rich.console import Console
 
 from demand_radar import db
+from demand_radar.brief import BriefNotAvailable, render_brief
 from demand_radar.collector import collect_subreddit, collect_watchlist
 from demand_radar.config import get_settings
 from demand_radar.reports import generate_report
@@ -93,6 +94,26 @@ def where() -> None:
     settings = get_settings()
     console.print(f"Database: {Path(settings.database_path).resolve()}")
     console.print(f"Reports: {Path(settings.reports_dir).resolve()}")
+
+
+@app.command("brief")
+def brief_cmd(
+    theme: str = typer.Option(..., "--theme", help="Pain theme to render a brief for."),
+    output_dir: str = typer.Option(
+        "../productionize_engine/briefs",
+        "--output-dir",
+        help="Directory to write the brief Markdown file into.",
+    ),
+) -> None:
+    """Render an opportunity brief Markdown file for the named theme."""
+    settings = get_settings()
+    try:
+        path = render_brief(
+            settings=settings, theme=theme, output_dir=Path(output_dir)
+        )
+    except BriefNotAvailable as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    console.print(f"Brief written: {path}")
 
 
 _VALID_STATUSES = {"pursuing", "parked", "rejected", "unvalidated"}
