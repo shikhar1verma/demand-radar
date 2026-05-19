@@ -82,7 +82,9 @@ def relevance_score(title: str, body: str = "", comment_count: int = 0) -> int:
     return score
 
 
-def is_relevant_post(title: str, body: str = "", comment_count: int = 0, threshold: int = 2) -> bool:
+def is_relevant_post(
+    title: str, body: str = "", comment_count: int = 0, threshold: int = 2
+) -> bool:
     return relevance_score(title, body, comment_count) >= threshold
 
 

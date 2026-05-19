@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sqlite3
 from collections.abc import Iterable
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from demand_radar.models import RedditComment, RedditPost, Signal
@@ -86,7 +86,7 @@ CREATE INDEX IF NOT EXISTS idx_signals_type ON signals(signal_type);
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def connect(path: Path) -> sqlite3.Connection:
@@ -108,7 +108,8 @@ def save_posts(conn: sqlite3.Connection, posts: Iterable[RedditPost]) -> int:
         cur = conn.execute(
             """
             INSERT OR IGNORE INTO reddit_posts
-            (id, subreddit, title, body, author, score, comment_count, url, permalink, created_utc, scraped_at)
+            (id, subreddit, title, body, author, score, comment_count,
+             url, permalink, created_utc, scraped_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (

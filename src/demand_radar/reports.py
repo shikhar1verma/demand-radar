@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import csv
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from demand_radar import db
@@ -34,7 +34,7 @@ def generate_report(settings: Settings, days: int = 7) -> Path:
         tools = [x.strip() for x in (row["tools_mentioned"] or "").split(",") if x.strip()]
         tool_counter.update(tools)
 
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     markdown_path = settings.reports_dir / f"daily_signals_{stamp}.md"
     opportunities_csv = settings.reports_dir / f"opportunities_{stamp}.csv"
     tools_csv = settings.reports_dir / f"tools_mentioned_{stamp}.csv"
@@ -68,9 +68,9 @@ def generate_report(settings: Settings, days: int = 7) -> Path:
     opportunity_rows.sort(key=lambda x: x["score"], reverse=True)
 
     with markdown_path.open("w", encoding="utf-8") as f:
-        f.write(f"# Demand Radar Report\n\n")
+        f.write("# Demand Radar Report\n\n")
         f.write(f"Window: last {days} days\n\n")
-        f.write(f"Generated at: {datetime.now(timezone.utc).isoformat()}\n\n")
+        f.write(f"Generated at: {datetime.now(UTC).isoformat()}\n\n")
         f.write("## Signal mix\n\n")
         for signal_type, count in signal_counter.most_common():
             f.write(f"- {signal_type}: {count}\n")
