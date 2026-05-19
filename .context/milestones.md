@@ -102,7 +102,7 @@ The worker session always works on the **first milestone whose Status is not `�
 
 ## M5 — First real brief, hand-reviewed (= V1 goal met)
 
-**Status:** Not started
+**Status:** ✓ Done (2026-05-19)
 
 **Output:** a single brief in `productionize_engine/briefs/` that scores ≥ 35 / 45 and I would actually send outreach against.
 
