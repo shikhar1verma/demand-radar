@@ -20,7 +20,7 @@ The worker session always works on the **first milestone whose Status is not `âœ
 
 ## M1 â€” `collect-watchlist` CLI
 
-**Status:** Not started
+**Status:** In progress
 
 **Output:** one command that politely loops the 48-row watchlist via the `public_json` backend, dedupes by Reddit id, and writes signals.
 
