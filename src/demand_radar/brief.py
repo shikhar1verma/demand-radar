@@ -46,9 +46,11 @@ def _verbatim_for_signal(conn: sqlite3.Connection, signal_row: sqlite3.Row) -> s
             return None
         body = (post["body"] or "").strip()
         title = (post["title"] or "").strip()
-        if body:
-            return f"{title} — {body}" if title else body
-        return title or None
+        if body and title and title.rstrip(".") in body:
+            return body
+        if body and title:
+            return f"{title} — {body}"
+        return body or title or None
     if signal_row["source_type"] == "comment":
         comment = conn.execute(
             "SELECT body FROM reddit_comments WHERE id = ?",

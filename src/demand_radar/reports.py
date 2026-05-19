@@ -135,13 +135,13 @@ def generate_report(settings: Settings, days: int = 7) -> Path:
 
 def suggest_offer(theme: str) -> str:
     if "report" in theme:
-        return "Done-for-you weekly reporting automation setup"
+        return "$399 done-for-you weekly client reporting automation pilot"
     if "sales" in theme:
-        return "Lead follow-up and CRM cleanup automation pilot"
+        return "$499 lead follow-up + CRM cleanup automation pilot"
     if "recruit" in theme:
-        return "Candidate follow-up workflow audit and automation pilot"
+        return "$399 candidate follow-up workflow audit + automation pilot"
     if "ecommerce" in theme:
-        return "Shopify operations reconciliation audit"
+        return "$299 Shopify operations reconciliation audit"
     if "spreadsheet" in theme:
-        return "Spreadsheet-to-automation cleanup service"
-    return "Paid workflow audit plus concierge automation pilot"
+        return "$299 spreadsheet-to-automation cleanup service"
+    return "$399 paid workflow audit + concierge automation pilot"
