@@ -53,6 +53,25 @@ Out of scope for V1:
 - Make network calls replaceable/mocked.
 - Tests must not require live Reddit credentials.
 
+## Sub-agent rules (Claude Code Agent tool)
+
+When spawning Claude Code Agent subagents inside this project:
+
+- **Classification, extraction, or structured-output work** (the M3 LLM
+  classifier and anything similar): **always pass `model="sonnet"`**
+  explicitly on every `Agent` call. Do not rely on the parent's model — it
+  defaults to Opus, which is wasteful for batch classification.
+- **`model="haiku"`** is **not allowed** for classification. It is too
+  fragile on negation, sarcasm, and implicit tool mentions, which are the
+  exact cases the LLM classifier exists to catch.
+- **`model="opus"`** only for one-shot high-stakes reasoning (e.g.
+  "which opportunity should I pursue this week?"). Never for batch work.
+- Do not introduce a runtime flag or env var that allows downgrading the
+  classification model to Haiku. If a future change needs to revisit this,
+  it must amend `.context/milestones.md` (M3 → Model choice) first.
+
+See `.context/milestones.md` (M3 → Model choice) for the full rationale.
+
 ## Suggested issue order
 
 1. Project setup and CLI skeleton.
