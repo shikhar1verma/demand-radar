@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS signals (
 
 CREATE TABLE IF NOT EXISTS opportunities (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key TEXT,
     opportunity_name TEXT NOT NULL,
     target_buyer TEXT,
     pain_theme TEXT,
@@ -84,7 +85,15 @@ CREATE INDEX IF NOT EXISTS idx_comments_post ON reddit_comments(post_id);
 CREATE INDEX IF NOT EXISTS idx_signals_type ON signals(signal_type);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_signals_source_unique
     ON signals(source_type, source_id, signal_type);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_opportunities_key
+    ON opportunities(key) WHERE key IS NOT NULL;
 """
+
+
+def _ensure_opportunities_key_column(conn: sqlite3.Connection) -> None:
+    cols = {row["name"] for row in conn.execute("PRAGMA table_info(opportunities)")}
+    if "key" not in cols:
+        conn.execute("ALTER TABLE opportunities ADD COLUMN key TEXT")
 
 
 def utc_now() -> str:
@@ -101,6 +110,7 @@ def connect(path: Path) -> sqlite3.Connection:
 def init_db(path: Path) -> None:
     with connect(path) as conn:
         conn.executescript(SCHEMA)
+        _ensure_opportunities_key_column(conn)
         conn.commit()
 
 
