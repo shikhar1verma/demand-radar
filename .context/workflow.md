@@ -48,7 +48,13 @@ If a brief comes back wrong because the classifier mislabelled a signal, we need
 
 ## Execution model
 
-A worker session (prompt #1 in [session_prompts.md](session_prompts.md)) drives milestones autonomously. The user runs a watchdog session (prompt #2) in parallel to catch drift. The worker's loop, per milestone:
+A **single Claude Code session** drives V1 to completion. The user pastes three messages in order:
+
+1. `/goal <V1 completion condition>` — the harness auto-continues turns after each one until the condition evaluates true, then auto-clears.
+2. `/loop 20m <drift-check prompt>` — fires periodic sanity-check turns in the same session.
+3. The worker boot prompt — kicks off the first work turn.
+
+See [session_prompts.md](session_prompts.md) for the exact text. The worker's loop, per milestone:
 
 1. `git pull` (if multi-machine).
 2. `uv run pytest && uv run ruff check .` — both must be green locally before starting a new test.
