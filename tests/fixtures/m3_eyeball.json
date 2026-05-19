@@ -1,0 +1,452 @@
+[
+  {
+    "source_id": "sa01",
+    "category": "sarcasm",
+    "text": "Oh I just LOVE spending 6 hours every Friday hand-stitching CSV exports from HubSpot. Living the dream.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "client reporting",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": ["hubspot"]
+  },
+  {
+    "source_id": "sa02",
+    "category": "sarcasm",
+    "text": "Salesforce is great if you enjoy paying $150/seat to fight a UI from 2009.",
+    "llm_signal_type": "pricing_complaint",
+    "llm_pain_theme": "crm pricing",
+    "llm_buyer_role": "sales",
+    "llm_tools_mentioned": ["salesforce"]
+  },
+  {
+    "source_id": "sa03",
+    "category": "sarcasm",
+    "text": "Zapier's pricing model is so charmingly transparent — you'll definitely know what you owe by month 4.",
+    "llm_signal_type": "pricing_complaint",
+    "llm_pain_theme": "automation pricing",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["zapier"]
+  },
+  {
+    "source_id": "sa04",
+    "category": "sarcasm",
+    "text": "Asana's notifications are perfect — for someone who wants 200 emails a day about nothing.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "pm noise",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["asana"]
+  },
+  {
+    "source_id": "sa05",
+    "category": "sarcasm",
+    "text": "I'm thrilled to spend Saturday re-keying invoice line items because my OCR tool 'almost' got it.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "invoice ingestion",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "sa06",
+    "category": "sarcasm",
+    "text": "ClickUp's 'one tool to rule them all' marketing is hilarious if you've actually tried to migrate from it.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "tool migration",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["clickup"]
+  },
+  {
+    "source_id": "sa07",
+    "category": "sarcasm",
+    "text": "Webflow CMS is a delight if you enjoy reading documentation written by the void.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "cms docs",
+    "llm_buyer_role": "webdev",
+    "llm_tools_mentioned": ["webflow"]
+  },
+  {
+    "source_id": "sa08",
+    "category": "sarcasm",
+    "text": "Loving the new Notion sync — it only loses my updates 20% of the time.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "notion sync",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["notion"]
+  },
+  {
+    "source_id": "sa09",
+    "category": "sarcasm",
+    "text": "Airtable's pricing is so refreshing — every quarter feels like a surprise party.",
+    "llm_signal_type": "pricing_complaint",
+    "llm_pain_theme": "airtable pricing",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["airtable"]
+  },
+  {
+    "source_id": "sa10",
+    "category": "sarcasm",
+    "text": "Sure, I'll just 'reach out to support' for the 4th time this month. That's what I signed up for.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "support quality",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "ne01",
+    "category": "negation",
+    "text": "I do NOT want another all-in-one PM tool. I want one thing that does weekly client reports without me babysitting it.",
+    "llm_signal_type": "buying_intent",
+    "llm_pain_theme": "client reporting",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "ne02",
+    "category": "negation",
+    "text": "Not a fan of how Salesforce forces you to license every feature separately.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "salesforce licensing",
+    "llm_buyer_role": "sales",
+    "llm_tools_mentioned": ["salesforce"]
+  },
+  {
+    "source_id": "ne03",
+    "category": "negation",
+    "text": "I haven't found a single Shopify reporting app that doesn't break when I add a second store.",
+    "llm_signal_type": "feature_request",
+    "llm_pain_theme": "multi-store reporting",
+    "llm_buyer_role": "shopify_operator",
+    "llm_tools_mentioned": ["shopify"]
+  },
+  {
+    "source_id": "ne04",
+    "category": "negation",
+    "text": "We tried ClickUp and Asana, neither solved our intake-form-to-task problem.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "intake to task",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": ["clickup", "asana"]
+  },
+  {
+    "source_id": "ne05",
+    "category": "negation",
+    "text": "Zapier doesn't handle the conditional branching we need — we end up writing custom code anyway.",
+    "llm_signal_type": "feature_request",
+    "llm_pain_theme": "automation branching",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["zapier"]
+  },
+  {
+    "source_id": "ne06",
+    "category": "negation",
+    "text": "I'm not interested in switching CRMs. I just want HubSpot to send a sane weekly digest.",
+    "llm_signal_type": "feature_request",
+    "llm_pain_theme": "weekly digest",
+    "llm_buyer_role": "sales",
+    "llm_tools_mentioned": ["hubspot"]
+  },
+  {
+    "source_id": "ne07",
+    "category": "negation",
+    "text": "Nothing on Capterra solved the client-update-without-a-meeting problem for us.",
+    "llm_signal_type": "alternative_request",
+    "llm_pain_theme": "async client updates",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "ne08",
+    "category": "negation",
+    "text": "I don't need more features. I need fewer breaking changes per quarter.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "platform stability",
+    "llm_buyer_role": "developer",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "ne09",
+    "category": "negation",
+    "text": "Webflow doesn't have a real staging environment, and that's a dealbreaker for agency work.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "staging environment",
+    "llm_buyer_role": "webdev",
+    "llm_tools_mentioned": ["webflow"]
+  },
+  {
+    "source_id": "ne10",
+    "category": "negation",
+    "text": "We haven't found anything cheaper than $200/seat that handles multi-currency invoicing for consultants.",
+    "llm_signal_type": "pricing_complaint",
+    "llm_pain_theme": "multi-currency invoicing",
+    "llm_buyer_role": "consultant",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "im01",
+    "category": "implicit_competitor",
+    "text": "Spent 4 hours every Monday morning copying Stripe payouts into a sheet so the owner can see weekly cash flow.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "cash flow reporting",
+    "llm_buyer_role": "bookkeeper",
+    "llm_tools_mentioned": ["stripe"]
+  },
+  {
+    "source_id": "im02",
+    "category": "implicit_competitor",
+    "text": "Our 'CRM' is a Notion database. It is not great.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "crm via notion",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": ["notion"]
+  },
+  {
+    "source_id": "im03",
+    "category": "implicit_competitor",
+    "text": "We ended up writing 3 Google Apps Scripts to make calendar booking work the way we wanted.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "booking customization",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["google calendar"]
+  },
+  {
+    "source_id": "im04",
+    "category": "implicit_competitor",
+    "text": "Our onboarding is an 11-step Loom + 4 PDFs. There has to be something better.",
+    "llm_signal_type": "alternative_request",
+    "llm_pain_theme": "client onboarding",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": ["loom"]
+  },
+  {
+    "source_id": "im05",
+    "category": "implicit_competitor",
+    "text": "I built our reporting in Looker Studio and now I'm the only one who can update it.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "reporting bus factor",
+    "llm_buyer_role": "data_analyst",
+    "llm_tools_mentioned": ["looker studio"]
+  },
+  {
+    "source_id": "im06",
+    "category": "implicit_competitor",
+    "text": "We patched 5 Zapier zaps together to onboard a client. It works until it doesn't.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "client onboarding automation",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["zapier"]
+  },
+  {
+    "source_id": "im07",
+    "category": "implicit_competitor",
+    "text": "Our 'analytics' is a giant pivot table our intern updates every Friday.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "weekly analytics",
+    "llm_buyer_role": "marketing",
+    "llm_tools_mentioned": ["excel"]
+  },
+  {
+    "source_id": "im08",
+    "category": "implicit_competitor",
+    "text": "I have a Discord bot that scrapes our Stripe API and pings the owner when MRR drops.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "revenue alerts",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": ["discord", "stripe"]
+  },
+  {
+    "source_id": "im09",
+    "category": "implicit_competitor",
+    "text": "We use a Trello board as our roadmap, a Google Doc as our spec, and a Slack thread as our changelog.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "product ops fragmentation",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["trello", "slack"]
+  },
+  {
+    "source_id": "im10",
+    "category": "implicit_competitor",
+    "text": "Honestly the bottleneck on shipping faster is our QA spreadsheet.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "qa tracking",
+    "llm_buyer_role": "engineering",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "cl01",
+    "category": "clear_pain",
+    "text": "Our weekly client reports take 5 hours every Friday because pulling data from HubSpot is manual.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "client reporting",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": ["hubspot"]
+  },
+  {
+    "source_id": "cl02",
+    "category": "clear_pain",
+    "text": "Looking for someone to set up a weekly KPI dashboard so I can stop building it manually.",
+    "llm_signal_type": "buying_intent",
+    "llm_pain_theme": "kpi dashboard",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "cl03",
+    "category": "clear_pain",
+    "text": "Willing to pay $500 for a service that handles all our payroll reconciliations.",
+    "llm_signal_type": "buying_intent",
+    "llm_pain_theme": "payroll reconciliation",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "cl04",
+    "category": "clear_pain",
+    "text": "Salesforce charges us $24k/year and we use about 10% of it.",
+    "llm_signal_type": "pricing_complaint",
+    "llm_pain_theme": "underused crm spend",
+    "llm_buyer_role": "sales",
+    "llm_tools_mentioned": ["salesforce"]
+  },
+  {
+    "source_id": "cl05",
+    "category": "clear_pain",
+    "text": "Onboarding new clients takes my agency 11 hours. I would pay good money to halve that.",
+    "llm_signal_type": "buying_intent",
+    "llm_pain_theme": "client onboarding",
+    "llm_buyer_role": "agency_owner",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "cl06",
+    "category": "clear_pain",
+    "text": "Need an Airtable consultant to clean up our 12-table mess.",
+    "llm_signal_type": "buying_intent",
+    "llm_pain_theme": "airtable cleanup",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["airtable"]
+  },
+  {
+    "source_id": "cl07",
+    "category": "clear_pain",
+    "text": "Our biggest cost center is one engineer maintaining custom Zapier flows full-time.",
+    "llm_signal_type": "competitor_dissatisfaction",
+    "llm_pain_theme": "zapier maintenance burden",
+    "llm_buyer_role": "ops_lead",
+    "llm_tools_mentioned": ["zapier"]
+  },
+  {
+    "source_id": "cl08",
+    "category": "clear_pain",
+    "text": "Switched from Asana to Linear and now we're stuck migrating 2 years of history.",
+    "llm_signal_type": "pain_signal",
+    "llm_pain_theme": "tool migration",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["asana", "linear"]
+  },
+  {
+    "source_id": "cl09",
+    "category": "clear_pain",
+    "text": "Anyone know a service that audits Shopify apps for performance impact?",
+    "llm_signal_type": "alternative_request",
+    "llm_pain_theme": "shopify performance audit",
+    "llm_buyer_role": "shopify_operator",
+    "llm_tools_mentioned": ["shopify"]
+  },
+  {
+    "source_id": "cl10",
+    "category": "clear_pain",
+    "text": "Recruiting tracker is a Google Sheet. It works but we lose candidates every month.",
+    "llm_signal_type": "manual_workaround",
+    "llm_pain_theme": "ats workflow",
+    "llm_buyer_role": "recruiter",
+    "llm_tools_mentioned": ["google sheets"]
+  },
+  {
+    "source_id": "no01",
+    "category": "noise",
+    "text": "Anyone else excited about the new Figma config conference?",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "events",
+    "llm_buyer_role": "designer",
+    "llm_tools_mentioned": ["figma"]
+  },
+  {
+    "source_id": "no02",
+    "category": "noise",
+    "text": "Just shipped my first npm package, feeling good!",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "milestone",
+    "llm_buyer_role": "developer",
+    "llm_tools_mentioned": ["npm"]
+  },
+  {
+    "source_id": "no03",
+    "category": "noise",
+    "text": "Anyone going to SaaStr Annual this year?",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "events",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "no04",
+    "category": "noise",
+    "text": "Notion's new homepage is gorgeous.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "ux praise",
+    "llm_buyer_role": "ops",
+    "llm_tools_mentioned": ["notion"]
+  },
+  {
+    "source_id": "no05",
+    "category": "noise",
+    "text": "Just wanted to thank ClickUp support for actually replying within a day.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "support praise",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["clickup"]
+  },
+  {
+    "source_id": "no06",
+    "category": "noise",
+    "text": "Linear 1.0 is solid. Migration was painless for us.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "migration success",
+    "llm_buyer_role": "pm",
+    "llm_tools_mentioned": ["linear"]
+  },
+  {
+    "source_id": "no07",
+    "category": "noise",
+    "text": "What's everyone reading this week? Looking for SaaS-adjacent books.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "book recommendations",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "no08",
+    "category": "noise",
+    "text": "Hot take: most SaaS pricing pages are too long.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "industry banter",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": []
+  },
+  {
+    "source_id": "no09",
+    "category": "noise",
+    "text": "Loving the energy in the indie hackers slack today.",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "community",
+    "llm_buyer_role": "founder",
+    "llm_tools_mentioned": ["slack"]
+  },
+  {
+    "source_id": "no10",
+    "category": "noise",
+    "text": "Anyone else find Twitter algorithm changes hilarious lately?",
+    "llm_signal_type": "tool_mention",
+    "llm_pain_theme": "social media",
+    "llm_buyer_role": "marketing",
+    "llm_tools_mentioned": ["twitter"]
+  }
+]

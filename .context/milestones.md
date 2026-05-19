@@ -54,7 +54,7 @@ The worker session always works on the **first milestone whose Status is not `�
 
 ## M3 — LLM classification via Claude Code subagents (Sonnet)
 
-**Status:** Not started
+**Status:** ✓ Done (2026-05-19)
 
 **Output:** a parallel subagent fan-out classifies batches of posts/comments. Each subagent returns Pydantic-validated `Signal` rows with verbatim buyer quotes, named tools, and 1–5 scores.
 
