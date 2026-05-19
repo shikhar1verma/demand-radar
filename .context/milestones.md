@@ -37,7 +37,7 @@ The worker session always works on the **first milestone whose Status is not `�
 
 ## M2 — Opportunity persistence + validation_status
 
-**Status:** Not started
+**Status:** ✓ Done (2026-05-19)
 
 **Output:** the `opportunities` table is actually populated (currently dead schema), with stable hash keys and a `validation_status` column the user can update via CLI.
 
