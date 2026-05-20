@@ -56,3 +56,28 @@ Trade-offs:
   top-level comments.
 - Backend swap is one env-var change. `Settings.require_reddit_credentials()`
   is only called by the PRAW backend; `public_json` works with no keys.
+
+## 006: Static HTML analytics report (post-V1)
+
+Decision:
+`generate_report` emits a self-contained static HTML file
+(`reports/daily_signals_<ts>.html`) alongside the Markdown and CSV outputs. It
+renders the collect -> classify -> score pipeline as a funnel plus signal-type,
+theme, tool, opportunity, and top-signal breakdowns.
+
+Reason:
+V1's goal (one real brief) is met, and the owner asked for a way to see
+analytics across pipeline stages and read individual signals. A static HTML
+file serves this without standing up a server.
+
+Constraints that keep it inside the spirit of decision 001 / the goal.md
+anti-goal:
+- No JavaScript, no external assets (inline `<style>`, CSS-only bars). Opens
+  offline; nothing is hosted.
+- It is a generated artifact, not an application — same lifecycle as the
+  Markdown/CSV reports, regenerated each `report` run, git-ignored.
+- All Reddit-sourced text is `html.escape`d to avoid HTML injection.
+
+Not done (deliberately): no interactive filtering, no backend, no deployment.
+If live filtering/drill-down is needed later, a local Streamlit app is the
+next step up — but that is a separate, explicit decision.

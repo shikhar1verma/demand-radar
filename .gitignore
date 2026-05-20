@@ -19,6 +19,7 @@ venv/
 # Generated reports
 reports/*.md
 reports/*.csv
+reports/*.html
 !reports/.gitkeep
 
 # OS / IDE

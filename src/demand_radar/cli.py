@@ -82,10 +82,11 @@ def collect_watchlist_cmd(
 
 @app.command("report")
 def report(days: int = typer.Option(7, help="Report window in days")) -> None:
-    """Generate Markdown and CSV reports."""
+    """Generate Markdown, CSV, and static HTML reports."""
     settings = get_settings()
     path = generate_report(settings, days=days)
     console.print(f"Report written: {path}")
+    console.print(f"HTML analytics: {path.with_suffix('.html')}")
 
 
 @app.command("where")

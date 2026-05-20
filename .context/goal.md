@@ -23,7 +23,9 @@ It is not "build the perfect signal pipeline." It is "find one opportunity worth
 
 ## Anti-goals — do not drift into these
 
-- **No web dashboard.** Markdown + CSV reports only.
+- **No web dashboard / hosted server.** Reports are Markdown + CSV + a
+  self-contained static HTML snapshot (owner-approved 2026-05-20; see
+  `docs/DECISIONS.md` #006). No backend, no deployment, no live UI.
 - **No automated Reddit DMs, posting, or voting.** Read-only forever.
 - **No second data source** until the first brief from Reddit is in hand.
 - **No theme-clustering with embeddings** until ≥ 500 signals exist.

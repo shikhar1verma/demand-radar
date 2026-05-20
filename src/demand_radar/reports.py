@@ -7,6 +7,7 @@ from pathlib import Path
 
 from demand_radar import db
 from demand_radar.config import Settings
+from demand_radar.html_report import build_html_report
 from demand_radar.opportunities import opportunity_key, save_opportunities
 from demand_radar.scoring import score_from_signal_counts
 
@@ -130,6 +131,10 @@ def generate_report(settings: Settings, days: int = 7) -> Path:
             writer.writerow({"tool": tool, "mentions": mentions})
 
     conn.close()
+
+    html_path = markdown_path.with_suffix(".html")
+    html_path.write_text(build_html_report(settings), encoding="utf-8")
+
     return markdown_path
 
 
